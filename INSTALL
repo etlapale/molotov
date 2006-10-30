@@ -1,0 +1,57 @@
+==========================
+Molotov Installation Guide
+==========================
+
+Molotov is a set of Python web applications allowing quickly setup of project
+websites. Each web application is designed as a module called a *coktail*.
+
+Requirements
+------------
+
+To install Molotov, the following software packages must be installed:
+
+ * Python, version >= 2.4.
+ * CherryPy, version >= 2.2.
+ * The SQLObject objet-relational mapper.
+ * Buffet as template abstraction layer.
+ * The Kid template system.
+ * Docutils, to parse the reStructuredText format.
+ * Subversion, if you want to use the repository viewer cocktail.
+
+Installing Molotov
+------------------
+
+The current installation way is to copy the whole Molotov tree structure
+in your web installation directory.
+
+Configuration
+-------------
+
+To configure the Molotov application, edit the molotov.conf file according
+to your needs.
+
+Running the standalone server
+-----------------------------
+
+As CherryPy provides a standalone web server, you can simply run it
+and view the result without using a classical HTTP server such
+as Apache or LightTPD. To start the server, simply run the following command::
+
+    $ ./start-molotov yourconfigfile.conf
+
+Then, fire up a browser and go to the location ``http://localhost:8080/``.
+
+Using Molotov
+-------------
+
+Once your Molotov website is up and running you should be able to make changes
+to the content via its web interface (eg. modify wiki pages). The wiki cocktail
+also provides further documentation (also accessible in the `help/` directory
+in reStructuredText format).
+
+Enjoy!
+
+/Neil Dökkalfar
+
+
+Visit the Molotov open source project at <http://molotov.next-touch.com/>
