@@ -5,6 +5,15 @@ Contenu de l'Aide
 Cette page regroupe la documentation de Molotov ainsi que de ses principaux
 cocktails.
 
+Molotov
+-------
+
+Informations générales sur Molotov.
+
+- CocktailsMolotov décrit ce que sont les cocktails de molotov et comment
+  en ajouter de nouveau.
+- UtilisateursMolotov commente la gestion des utilisateurs dans Molotov.
+
 Wiki
 ----
 
