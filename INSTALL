@@ -16,7 +16,11 @@ To install Molotov, the following software packages must be installed:
  * Buffet as template abstraction layer.
  * The Kid template system.
  * Docutils, to parse the reStructuredText format.
- * Subversion, if you want to use the repository viewer cocktail.
+
+Optional requirements:
+
+ * Subversion, to get SVN repository support.
+ * Bazaar-ng, to get Bazaar repository support.
 
 Installing Molotov
 ------------------

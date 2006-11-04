@@ -12,7 +12,7 @@ from molotov import expose, flash, url
 
 import svn.fs, svn.core, svn.repos
 
-dlog = logging.getLogger("molotov.cocktails.repository")
+dlog = logging.getLogger("molotov.cocktails.svn")
 
 def printable_size (size) :
     "Return a printable version of the size."
@@ -86,13 +86,13 @@ class Repository :
     "Subversion repository viewer."
 
     def __init__ (self, config) :
-        "Create a new repository viewer."
-        repo_path = config.get ("molotov.cocktails.repository.repo_path")
+        "Create a new SVN repository viewer."
+        repo_path = config.get ("molotov.cocktails.svn.repo_path")
         self.path = repo_path
         self.repo = svn.repos.open (repo_path)
         self.fs = svn.repos.fs (self.repo)
 
-    @expose ("molotov.cocktails.repository.templates.repository")
+    @expose ("molotov.cocktails.svn.templates.repository")
     def index (self, directory = "", revision = None) :
         """
         List a repository directory for a given revision.
@@ -133,7 +133,7 @@ class Repository :
             else :
                 auth_log = author + ": " + log
             max_log_len = cherrypy.config.get (
-                "molotov.cocktails.repository.max_log_len", 60)
+                "molotov.cocktails.svn.max_log_len", 60)
             if max_log_len >= 0 and len (auth_log) > max_log_len :
                 auth_log = auth_log[:max_log_len - 3] + "..."
             
@@ -149,7 +149,7 @@ class Repository :
                      directory = directory, revision = revision, 
                      history = [], page = None)
 
-    @expose ("molotov.cocktails.repository.templates.view")
+    @expose ("molotov.cocktails.svn.templates.view")
     def view (self, path, revision = None) :
         
         if revision :
@@ -171,7 +171,7 @@ class Repository :
                      parents = get_parents (parent), revision = revision,
                      history = [], page = None)
 
-    @expose ("molotov.cocktails.repository.templates.log")
+    @expose ("molotov.cocktails.svn.templates.log")
     def log (self) :
         last_rev = svn.fs.youngest_rev (self.fs)
         revisions = []

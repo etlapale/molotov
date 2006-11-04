@@ -12,7 +12,7 @@
       <a href="${mltv.url ('/')}">Repository Tree</a>
     </p>
     
-    <table class="repository">
+    <table class="svn_repo">
       <tr><th>Rev</th><th>Date</th><th>Auteur</th><th>Log</th></tr>
       <tr py:for="(rev,date,author,log) in revisions">
 	<td><a href="${mltv.url ('/', revision = rev)}"

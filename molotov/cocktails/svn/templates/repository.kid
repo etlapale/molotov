@@ -33,7 +33,7 @@
     </form>
 
     <!-- Directory content -->
-    <table class="repository">
+    <table class="svn_repo">
       <tr><th>Name</th><th>Size</th><th>Rev</th><th>Date</th><th>Last Change</th></tr>
       <tr py:if="parent">
 	<td colspan="5" class="parent">

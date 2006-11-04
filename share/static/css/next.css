@@ -612,16 +612,16 @@ table.diff td.added
   display: inline;
 }
 
-table.repository
+table.svn_repo
 { 
 }
 
-.repository tr:hover
+.svn_repo tr:hover
 { 
   background-color: #f6f6ff;
 }
 
-.repository td
+.svn_repo td
 {
   padding-left: 1em;
   padding-right: 1em;
@@ -629,12 +629,12 @@ table.repository
   padding-bottom: 0.25em;
 }
 
-.repository .age
+.svn_repo .age
 { 
   color: #7682bf;
 }
 
-.repository .log
+.svn_repo .log
 { 
   color: #7682bf;
   font-size: smaller;
@@ -655,7 +655,7 @@ form.select_revision
   margin: 0;
 }
 
-.repository .dir .name
+.svn_repo .dir .name
 { 
   background: url('/static/images/dir-16x16.png');
   background-repeat: no-repeat;
@@ -664,7 +664,7 @@ form.select_revision
   padding-bottom: 2px;
 }
 
-.repository .file .name
+.svn_repo .file .name
 {
   background: url('/static/images/file-16x16.png');
   background-repeat: no-repeat;
