@@ -10,6 +10,8 @@ Molotov
 
 Informations générales sur Molotov.
 
+- PremiersPasAvecMolotov vous introduit à Molotov de son installation à des
+  rudiments de configuration.
 - CocktailsMolotov décrit ce que sont les cocktails de molotov et comment
   en ajouter de nouveau.
 - UtilisateursMolotov commente la gestion des utilisateurs dans Molotov.

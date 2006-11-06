@@ -77,7 +77,7 @@ class WikiNameInliner (states.Inliner) :
         return [r]
 
 class Wiki :
-    "Wiki controller for CherryPy."
+    "Wiki controller for Molotov."
 
     frontpage_name = "FrontPage"
     "Wiki front page name."

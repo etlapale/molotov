@@ -12,7 +12,9 @@ Un cocktail est simplement un module Python_ avec un controller CherryPy_
 à l'intérieur. Certaines variables du module sont utilisées par Molotov
 lors du chargement du cocktail. Au minimum la variable ``molotov_controller``
 doit contenir la classe du controller du cocktail. ``molotov_name`` permet
-de définir un nom d'affichage pour le cocktail.
+de définir un nom d'affichage pour le cocktail. Le controller du cocktail
+devra posséder une méthode d'initialisation de la forme :
+``init (self, config)``.
 
 .. _CherryPy: http://www.cherrypy.org/
 .. _Python: http://www.python.org/

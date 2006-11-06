@@ -39,23 +39,26 @@ def main () :
     log = logging.getLogger ('molotov')
 
     # Load the specific config
-    if not os.path.isfile (args[0]) :
+    conf_abs_path = os.path.abspath (args[0])
+    if not os.path.isfile (conf_abs_path) :
         print >>sys.stderr, "Config file not found: `%s`" % args[0]
         sys.exit ()
-    update_config (args[0], env)
+    update_config (conf_abs_path, env)
     cherrypy.config.update ({"global" : {"molotov.cocktails.wiki.helpdir" :
                                          os.path.join (prefix_dir,
                                                        cherrypy.config.get ("molotov.cocktails.wiki.helpdir"))}})
 
     # SQL initialization
     db_uri = cherrypy.config.get ("molotov.sql_engine")
+    if db_uri is None :
+        print >>sys.stderr, "You must specify an SQL engine"
     sql_con = connectionForURI (db_uri)
     sqlhub.processConnection = sql_con
     import molotov.model
     
     # Load the required cocktails
-    cocktails = map (lambda s : s.strip (),
-                     cherrypy.config.get ("molotov.cocktails").split (","))
+    cock_lst = cherrypy.config.get ("molotov.cocktails", "wiki, user")
+    cocktails = map (lambda s : s.strip (), cock_lst.split (","))
     log.debug ('Loading cocktails: %s' % str (cocktails))
     root = None
     for cocktail in cocktails :
