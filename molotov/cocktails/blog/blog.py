@@ -8,16 +8,16 @@ from docutils.core import publish_parts
 from docutils.parsers.rst import Parser
 from molotov import expose, redirect, url
 from molotov.cocktails.blog.model import Billet, BilletComment
-from molotov.cocktails.wiki.wiki import WikiNameInliner
+#from molotov.cocktails.wiki.wiki import WikiNameInliner
 
 log = logging.getLogger ("molotov.cocktails.blog")
 
 def rst2html (data) :
     # TODO: a global main rst2html
     root = str (url ("/"))
-    inliner = WikiNameInliner (root)
-    parser = Parser (inliner = inliner)
-    return publish_parts (data, parser = parser,
+    #inliner = WikiNameInliner (root)
+    #parser = Parser (inliner = inliner)
+    return publish_parts (data, #parser = parser,
                           writer_name = 'html')['html_body']
 
 class Blog :
@@ -32,7 +32,7 @@ class Blog :
         "Display the list of blog billets."
         billets = Billet.select (orderBy = 'creation_date')
         return dict (billets = list (billets), rst2html = rst2html)
-
+    
     @expose ("molotov.cocktails.blog.templates.new_billet")
     def new_billet (self) :
         return dict ()
@@ -52,4 +52,4 @@ class Blog :
             b = Billet.get (billet)
             c = BilletComment (data = data, creation_date = datetime.now (),
                                user = usr, billet = b)
-    
+        raise redirect ("/")

@@ -16,6 +16,7 @@ def expose (template_name = None) :
     def expose_decorator (func) :
         log.debug ('Exposing %s' % str (func))
         def exposed_func (*args, **kw) :
+            log.debug ("BLA!!!")
             # Get the dictionary
             d = func (*args, **kw)
             if not isinstance (d, dict) :
@@ -38,6 +39,7 @@ def expose (template_name = None) :
                 username = None
             d['molotov_user'] = d['mltv_user'] = username
 
+            print "Returning:", (template_name, d)
             return (template_name, d)
         if template_name :
             return cherrypy.expose (exposed_func)

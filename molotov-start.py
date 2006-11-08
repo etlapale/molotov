@@ -2,6 +2,7 @@
 # -*- coding: utf-8; mode: python; -*-
 
 import codecs, locale, logging, optparse, os.path, sys
+from buffet import TemplateFilter, using_template
 import cherrypy
 from cherrypy.config import dict_from_config_file
 from cherrypy.lib import autoreload
@@ -81,6 +82,9 @@ def main () :
         else :
             log.error ("%s seems not being a valid cocktail" % cocktail)
 
+    # Add templating support to the website
+    root._cp_filters = [TemplateFilter ('kid')]
+    
     # Start the CherryPy server
     cherrypy.root = root
     cherrypy.server.start ()

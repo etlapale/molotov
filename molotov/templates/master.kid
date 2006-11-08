@@ -16,7 +16,7 @@
       
       <div id="head">
 	<div id="headtitle" py:content="molotov_title">Website Title</div>
-	<ul id="cocktails">
+	<ul id="cocktails" py:if="len (molotov_cocktails) > 1">
 	  <li py:for="(cocktail, url) in molotov_cocktails" py:if="url != '/user'">
 	    <a href="${url}" py:content="cocktail">CocktailName</a>
 	  </li>

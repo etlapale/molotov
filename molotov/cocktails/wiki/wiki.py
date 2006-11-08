@@ -4,7 +4,6 @@
 import logging
 
 import cherrypy
-from buffet import TemplateFilter, using_template
 from sqlobject import SQLObjectNotFound
 
 import molotov
@@ -123,8 +122,6 @@ class Wiki :
         return publish_string (wiki_data, parser = self.parser,
                                writer_name = 'xml')
 
-    _cp_filters = [TemplateFilter ('kid')]
-
     @molotov.expose ('molotov.cocktails.wiki.templates.page')
     def index (self, pagename = frontpage_name, format = "web") :
         
@@ -165,7 +162,7 @@ class Wiki :
         return dict (data = content, page = page, revision = revision,
                      history = history)
 
-    @molotov.expose ()
+    @expose ()
     def default (self, pagename = frontpage_name, **kw) :
         "Make a catch-all redirection to `index ()`."
         return self.index (pagename)

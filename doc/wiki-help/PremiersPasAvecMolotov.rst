@@ -14,7 +14,8 @@ Installation
 
 Molotov a besoin de quelques programmes et autres bibliothèques pour être
 utilisé. Vous avez évidemment besoin de Python mais aussi de CherryPy_,
-SQLObject_ et de Kid_.
+SQLObject_ (un ORM), de Buffet_ (une interface aux moteurs de templates)
+et de Kid_ (un moteur de templates).
 
 Molotov étant simplement une application Python, il n'est donc pas nécessaire
 de le compiler pour l'utiliser. Une fois l'archive décompressé, ajoutez son
@@ -81,6 +82,7 @@ le cocktail subversion nécessite le chemin vers la repository ::
   molotov.cocktails.svn.repo_path = "/var/svn/helloworld"
 
 
+.. _Buffet: http://www.buffet.org/
 .. _CherryPy: http://www.cherrypy.org/
 .. _Kid: http://www.kid-templating.org/
 .. _Molotov: http://molotov.next-touch.com/
