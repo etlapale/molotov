@@ -19,14 +19,14 @@
       <strong>Wiki</strong>
       <ul>
 	<li><a href="${mltv.url ('/')}">Page d'Accueil</a></li>
-	<li><a href="/ContenuDeLAide">Contenu de l'Aide</a></li>
-	<li><a href="/pagelist">Liste des Pages</a></li>
+	<li><a href="${mltv.url ('/ContenuDeLAide')}">Contenu de l'Aide</a></li>
+	<li><a href="${mltv.url ('/pagelist')}">Liste des Pages</a></li>
       </ul>
       <div py:if="page">
 	<strong>Page</strong>
 	  <ul>
-	    <li><a href="${'/edit?pagename=%s' % page.pagename}">Éditer la Page</a></li>
-	    <li><a href="${'/modifs?pagename=%s' % page.pagename}">Modifications</a></li>
+	    <li><a href="${mltv.url ('/edit', pagename=page.pagename)}">Éditer la Page</a></li>
+	    <li><a href="${mltv.url ('/modifs', pagename=page.pagename)}">Modifications</a></li>
 	    <li>Formats :
 	      <a href="${mltv.url ('/', pagename=page.pagename, format='plain')}">Plain</a> |
 	      <a href="${mltv.url ('/', pagename=page.pagename, format='xml')}">XML</a>
