@@ -1,0 +1,302 @@
+body
+{
+  color: black;
+  background: #f0f0f0;
+}
+
+#body
+{ 
+  background: white;
+  border-color: #2f97ff;
+}
+
+#head
+{ 
+  background: #e6f2ff;
+  color: #2f97ff;
+  border-color: #2f97ff;
+}
+
+h1, h2, h3, h4, h5
+{
+  color: #2f97ff;
+}
+
+#head #cocktails a
+{ 
+  color: #2f97ff;
+}
+
+#head #cocktails a:hover
+{ 
+  color: #ff0080;
+}
+
+.flash
+{ 
+  color: red;
+  border-color: red;
+  background-color: #fff2e6;
+}
+
+#footer
+{ 
+  color: #b0b0b0;
+}
+
+#footer a[href]
+{
+  color: #2f97ff;
+}
+
+.toolbar ul, .toolbar li
+{
+  color: #9da7b2;
+}
+
+.toolbar a[href]
+{
+  color: #9da7b2;
+}
+
+.toolbox
+{ 
+  border-color:  #d6e2ff;
+}
+
+.toolbox strong
+{
+  color: #4fbc32;
+}
+
+.toolbox a[href]
+{
+  color: #2f97ff;
+}
+
+.toolbox p strong
+{ 
+  color: #ff0080;
+}
+
+.toolbox form input
+{
+  color: #96a2bf;
+  border-color:  #d6e2ff;
+}
+
+div.blog_billet_info
+{ 
+  color: #9da7b2;
+}
+
+.blog_billet h1:before
+{ 
+  color: #d6e2ff;
+}
+
+.blog_billet h1:after
+{ 
+  color: #d6e2ff;
+}
+
+.blog_billet h1 a
+{ 
+  color: #2f97ff;
+}
+
+.blog_billet_info a, .blog_billet_info a[href]
+{ 
+  color: #9da7b2;
+}
+
+.news_info a[href]
+{ 
+  color: #9da7b2;
+}
+
+ul.news_links a
+{
+  color: #ff0080;
+}
+
+.error
+{
+  color: red;
+}
+
+.blog_billet .comment
+{
+  border-color: #f0f0f0;
+}
+
+.blog_billet .comment .info
+{ 
+  color: #9da7b2;
+}
+
+span.disabled
+{ 
+  color: #b0b0b0;
+}
+
+.modifs strong
+{ 
+  color: #4fbc32;
+}
+
+th
+{
+  color: #76829f;
+  background-color: #f6f6ff;
+}
+
+td, th
+{ 
+  border: 1px solid #96a2bf;
+}
+
+
+table.diff td.deleted
+{ 
+  background-color: #ff8686;
+}
+
+table.diff td.added
+{ 
+  background-color: #86ff86;
+}
+
+.svn_repo tr:hover
+{ 
+  background-color: #f6f6ff;
+}
+
+.svn_repo .age
+{ 
+  color: #7682bf;
+}
+
+.repo_file tr:hover
+{ 
+  background-color: #f6f6ff;
+}
+
+.repo_file .line_number
+{ 
+  background-color: #f6f6ff;
+}
+
+.repo_file .odd
+{ 
+  background-color: #f6f6ff;
+}
+
+#userbox input:focus
+{
+  background-color: white;
+}
+
+#userbox input[type=submit]
+{ 
+  background-color: #f0f0f0;
+  color: #ff0080;
+}
+
+#userbox strong.username
+{ 
+  color: #4fbc32;
+}
+
+input[disabled=disabled]
+{
+  color: #9da7b2;
+  background-color: #f8f8f8;
+}
+
+a[href]
+{
+  color: #ff0080;
+}
+
+a[href]:hover
+{ 
+  color: #ff0080;
+}
+
+a.wikiname[href]
+{
+  color: #2f97ff;
+}
+
+textarea, input
+{ 
+ border-color: #9da7b2;
+}
+
+.pageinfo
+{ color: #b0b0b0; }
+
+.history li a
+{
+  color: #ff0080;
+}
+
+.modifs code
+{ 
+  border-color: #d6e2ff;
+  color: black;
+}
+
+#userbox
+{ 
+  background-color: #f0f0f0;
+}
+
+#userbox input
+{
+  color: #9da7b2;
+  background-color: #f8f8f8;
+}
+
+#userbox input[type=submit]:hover, #userbox a:hover
+{ 
+  color: #9da7b2;
+}
+
+#userbox p
+{ 
+  color: #9da7b2;
+}
+
+.submenu a
+{ 
+  border-color:  #ff0080;
+}
+
+.submenu a:hover
+{ 
+  color: #9da7b2;
+  border-color: 1px dotted;
+}
+
+.blog_billet_info
+{
+  color: #9da7b2;
+}
+
+.svn_repo .log
+{ 
+  color: #7682bf;
+}
+
+table
+{ 
+  border: 1px solid #96a2bf;
+}
+
+.preview
+{ 
+  border-color: #d6e2ff;
+  background-color: #f6f6ff;
+}

@@ -30,9 +30,10 @@
       <div class="comment" py:for="c in billet.comments">
 	<div class="text" py:content="XML (rst2html (c.data))">Comment text</div>
 	<div class="info">
+	  Par
 	  <span class="user" py:if="c.user is None">Anonyme</span>
-	  Par <span class="user" py:if="not c.user is None"
-		    py:content="c.user.display_name">User</span>
+	  <span class="user" py:if="not c.user is None"
+		py:content="c.user.display_name">User</span>
 	  le
 	  <span py:content="c.creation_date.strftime ('%A %d %B %Y à %Hh%M')"
 		class="datetime">Comment datetime</span>

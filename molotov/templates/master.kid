@@ -7,7 +7,7 @@
 	  py:replace="''"/>
     <title py:replace="''">Your title goes here</title>
     <meta py:replace="item[:]"/>
-    <link rel="stylesheet" type="text/css" href="/static/css/next.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/molotov.css"/>
   </head>
   
   <body py:match="item.tag=='{http://www.w3.org/1999/xhtml}body'"

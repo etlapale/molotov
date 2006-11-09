@@ -82,6 +82,41 @@ le cocktail subversion nécessite le chemin vers la repository ::
   molotov.cocktails.svn.repo_path = "/var/svn/helloworld"
 
 
+Look and Feel
+-------------
+
+Il est possible de modifier l'apparence de sites web basé sur Molotov à
+différents niveaux. Le niveau le plus simple consiste à modifier les
+feuilles de style utilisées par le template par défaut. Le template standard
+indique au de chercher les feuilles CSS dans l'URL ``/static``
+qui mappe directement le répertoire ``static`` de l'installation de Molotov.
+Il vous suffit de remapper cette URL vers votre propre répertoire de feuilles
+de style et de les créer. Dans l'exemple suivant nous copions et modifions
+les feuilles CSS standard ::
+
+  $ cp -r /path/to/molotov/share/static /path/to/mywebapp
+  $ cat >> /path/to/mywebapp/my_app.conf << EOF
+  [/static]
+  static_filter.on = True
+  static_filter.dir = "/path/to/mywebapp/static"
+  EOF
+  $ vi /path/to/mywebapp/static/css/colors.css
+
+Nous avons recopié, modifié et remappé le répertoire ``static`` par défaut
+de Molotov qui contient des CSS, des images et autres fichiers JavaScript.
+Nous aurions aussi pu nous contenter de remapper l'URL ``/static/css``.
+Le paramètre ``static_filter.on`` est ici redondant puisque déjà présent
+dans la configuration de base, mais nous l'ajoutons pour plus de clarté.
+Évidemment il s'agit d'une configuration CherryPy standard et vous êtes
+invité à en lire la documentation pour plus d'informations.
+
+Le fichier ``colors.css`` que nous avons ici édité est celui qui définit les
+couleurs utilisées par défaut. Il est inclus dans la CSS ``molotov.css`` du
+même répertoire, elle-même liée par la page de template maître à
+l'aide d'une ligne de la forme ::
+
+  <link rel="stylesheet" type="text/css" href="/static/css/molotov.css"/>
+
 .. _Buffet: http://www.buffet.org/
 .. _CherryPy: http://www.cherrypy.org/
 .. _Kid: http://www.kid-templating.org/
