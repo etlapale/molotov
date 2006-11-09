@@ -30,8 +30,14 @@ class Blog :
     @expose ("molotov.cocktails.blog.templates.blog")
     def index (self) :
         "Display the list of blog billets."
-        billets = Billet.select (orderBy = 'creation_date')
+        billets = Billet.select (orderBy = 'creation_date').reversed ()
         return dict (billets = list (billets), rst2html = rst2html)
+
+    @expose ("molotov.cocktails.blog.templates.billet")
+    def billet (self, billet) :
+        "Display a specific billet."
+        b = Billet.get (billet)
+        return dict (billet = b, rst2html = rst2html)
     
     @expose ("molotov.cocktails.blog.templates.new_billet")
     def new_billet (self) :
@@ -49,7 +55,8 @@ class Blog :
     def do_new_comment (self, billet, data) :
         if billet and data :
             usr = cherrypy.session.get ("molotov.user", None)
+            print billet
             b = Billet.get (billet)
             c = BilletComment (data = data, creation_date = datetime.now (),
                                user = usr, billet = b)
-        raise redirect ("/")
+        raise redirect ("/billet", billet=billet)

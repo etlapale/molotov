@@ -256,7 +256,7 @@ ul.uselist li:before
   border: 1px solid #d6e2ff;
 }
 
-div.news_info
+div.blog_billet_info
 {
   font-size: smaller;
   color: #9da7b2;
@@ -264,18 +264,18 @@ div.news_info
   padding: 0;
 }
 
-.news
+.blog_billet
 { 
   margin-top: 2em;
   margin-bottom: 2.5em;
 }
 
-.news h3, .news. h2
+.blog_billet h1, .blog_billet. h1
 {
   margin-bottom: 0.25em;
 }
 
-.news h3:before, .news h2:before
+.blog_billet h1:before
 {
   /*content: '&lt;';*/
   content: '«';
@@ -284,7 +284,7 @@ div.news_info
   font-size: x-large;
 }
 
-.news h3:after, .news h2:after
+.blog_billet h1:after
 {
   content: '»';
   color: #d6e2ff;
@@ -292,23 +292,19 @@ div.news_info
   font-size: x-large;
 }
 
-.news_info_date
+.blog_billet h1 a
 { 
-  background: url('img/time.png');
-  background-repeat: no-repeat;
-  padding-left: 20px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  color: #2f97ff;
 }
 
-.news_info_comments
+.blog_billet_info a, .blog_billet_info a[href]
 { 
-  background-image: url('img/comments.png');
-  background-repeat: no-repeat;
-  padding-left: 20px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  margin-left: 2em;
+  color: #9da7b2;
+}
+
+.blog_billet_info a:hover, .blog_billet_info a[href]:hover
+{ 
+  text-decoration: none;
 }
 
 ul.news_info_tags
@@ -361,7 +357,7 @@ ul.news_links a
   color: #ff0000;
 }
 
-.comment
+.blog_billet .comment
 { 
   border: 1px solid #f0f0f0;
   margin: 1em;
@@ -371,7 +367,7 @@ ul.news_links a
   padding-bottom: .5em;
 }
 
-.comment_info
+.blog_billet .comment .info
 { 
   font-size: smaller;
   color: #9da7b2;
@@ -466,6 +462,16 @@ textarea, input
 .user
 { 
   background: url('/static/images/user-16x16.png');
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-style: normal;
+}
+
+.comments
+{ 
+  background: url('/static/images/comments-16x16.png');
   background-repeat: no-repeat;
   padding-left: 20px;
   padding-top: 2px;
@@ -807,4 +813,12 @@ input[disabled=disabled]
   text-decoration: none;
   color: #9da7b2;
   border-bottom: 1px dotted #9da7b2;
+}
+
+.blog_billet_info
+{
+  font-size: smaller;
+  color: #9da7b2;
+  margin: 0;
+  padding: 0;
 }

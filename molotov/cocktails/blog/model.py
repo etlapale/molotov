@@ -10,7 +10,7 @@ class Billet (SQLObject) :
     creation_date = DateTimeCol ()
     user = ForeignKey ('MolotovUser')
     data = UnicodeCol ()
-    comments = MultipleJoin ('BilletComments')
+    comments = MultipleJoin ('BilletComment')
 
 class BilletComment (SQLObject) :
     data = UnicodeCol ()
