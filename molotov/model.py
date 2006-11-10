@@ -1,7 +1,7 @@
 # -*- coding: utf-8; -*-
 
 from datetime import datetime
-from sqlobject import DateTimeCol, RelatedJoin, SQLObject, UnicodeCol
+from sqlobject import DateTimeCol, RelatedJoin, SQLObject, SQLObjectNotFound, UnicodeCol
 
 class MolotovUser (SQLObject) :
     "A Molotov user."
@@ -25,3 +25,10 @@ class MolotovGroup (SQLObject) :
 # Create the tables if needed
 for cls in [MolotovUser, MolotovGroup] :
     cls.createTable (ifNotExists = True)
+
+# Create the `molotov_admin` group if needed
+try :
+    adm_grp = MolotovGroup.byName ('molotov_admin')
+except SQLObjectNotFound :
+    adm_grp = MolotovGroup (name = 'molotov_admin')
+

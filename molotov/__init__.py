@@ -37,6 +37,12 @@ def expose (template_name = None) :
             else :
                 username = None
             d['molotov_user'] = d['mltv_user'] = username
+            groups = []
+            if not usr is None :
+                print usr.groups
+                for grp in usr.groups :
+                    groups.append (grp.name)
+            d['molotov_groups'] = groups
 
             return (template_name, d)
         if template_name :

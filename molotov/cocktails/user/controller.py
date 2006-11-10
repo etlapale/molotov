@@ -6,7 +6,7 @@ import cherrypy
 from sqlobject import SQLObjectNotFound
 import molotov
 from molotov import expose, flash, redirect, url
-from molotov.model import MolotovUser
+from molotov.model import MolotovUser, MolotovGroup
 
 class Controller :
     "The user controller."
@@ -75,6 +75,49 @@ class Controller :
         # Register the user
         u = MolotovUser (name = name, password = pass1, email = email,
                          display_name = name, creation = datetime.now ())
-        
-        flash ("Registration successful")
+
+        # If first user, then molotov admin
+        if MolotovUser.select ().count () == 1 :
+            adm_grp = MolotovGroup.byName ('molotov_admin')
+            adm_grp.addMolotovUser (u)
+            flash ("You are now registred as administrator")
+        else :
+            flash ("Registration successful")
         return self.register (name, pass1, pass2, email)
+
+    @expose ("molotov.cocktails.user.templates.admin")
+    def admin (self) :
+        return dict (groups = MolotovGroup.select (orderBy='name'),
+                     users = MolotovUser.select (orderBy='name'))
+
+    @expose ()
+    def add_member (self, group, user) :
+        grp = MolotovGroup.byName (group)
+        usr = MolotovUser.byName (user)
+        grp.addMolotovUser (usr)
+        flash ("User %s added to group %s" % (user, group))
+        raise redirect ("/admin")
+
+    @expose ()
+    def remove_member (self, group, user) :
+        grp = MolotovGroup.byName (group)
+        usr = MolotovUser.byName (user)
+        grp.removeMolotovUser (usr)
+        flash ("User %s removed from %s" % (user, group))
+        raise redirect ("/admin")
+
+    @expose ()
+    def create_group (self, group) :
+        grp = MolotovGroup (name=group)
+        flash ("Group %s created" % group)
+        raise redirect ("/admin")
+
+    @expose ()
+    def delete_group (self, group) :
+        grp = MolotovGroup.byName (group)
+        if len (grp.users) :
+            flash ("Could not destroy group %s (not empty)" % group)
+        else :
+            grp.destroySelf ()
+            flash ("Group %s destroyed" % group)
+        raise redirect ("/admin")

@@ -38,6 +38,8 @@
 	    Connecté en tant que <strong py:content="molotov_user"
 					 class="username">username</strong>
 	  </p>
+	  <a py:if="'molotov_admin' in molotov_groups"
+	     href="/user/admin">Administration</a>
 	  <a href="/user/logout">Déconnexion</a>
 	</div>
       </div>
