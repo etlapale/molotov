@@ -37,15 +37,17 @@ class Blog :
     def billet (self, billet) :
         "Display a specific billet."
         b = Billet.get (billet)
-        return dict (billet = b, rst2html = rst2html)
+        return dict (billet = b, rst2html=rst2html)
     
     @expose ("molotov.cocktails.blog.templates.new_billet")
-    def new_billet (self) :
-        return dict ()
+    def new_billet (self, title=None, data=None) :
+        return dict (title=title, data=data, rst2html=rst2html)
 
     @expose ()
-    def do_new_billet (self, title, data) :
-        if data and title :
+    def do_new_billet (self, title, data, submit) :
+        if data and title:
+            if submit == "preview" :
+                return self.new_billet (title, data)
             usr = cherrypy.session.get ("molotov.user", None)
             b = Billet (title = title, creation_date = datetime.now (),
                         user = usr, data = data)
