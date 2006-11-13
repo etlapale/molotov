@@ -16,13 +16,13 @@ class Tickets :
         "Init the Tickets controller."
         pass
 
-    @expose ("molotov.cocktails.tickets.templates.view")
+    @expose (".templates.view")
     def index (self) :
         "Display a list of all tickets."
         tickets = Ticket.select (orderBy = 'change_date')
         return dict (tickets = list (tickets))
 
-    @expose ("molotov.cocktails.tickets.templates.ticket")
+    @expose (".templates.ticket")
     def ticket (self, ticket) :
         try :
             t = Ticket.get (ticket)
@@ -34,7 +34,7 @@ class Tickets :
                      type = TicketType.strings[t.ticket_type],
                      status = TicketStatus.strings[t.status])
 
-    @expose ("molotov.cocktails.tickets.templates.new")
+    @expose (".templates.new")
     def new (self, title="", type=0, priority=2, owner="", comment="") :
         "Create a new ticket."
 

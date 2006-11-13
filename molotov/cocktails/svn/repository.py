@@ -92,7 +92,7 @@ class Repository :
         self.repo = svn.repos.open (repo_path)
         self.fs = svn.repos.fs (self.repo)
 
-    @expose ("molotov.cocktails.svn.templates.repository")
+    @expose (".templates.repository")
     def index (self, directory = "", revision = None) :
         """
         List a repository directory for a given revision.
@@ -149,7 +149,7 @@ class Repository :
                      directory = directory, revision = revision, 
                      history = [], page = None)
 
-    @expose ("molotov.cocktails.svn.templates.view")
+    @expose (".templates.view")
     def view (self, path, revision = None) :
         
         if revision :
@@ -171,7 +171,7 @@ class Repository :
                      parents = get_parents (parent), revision = revision,
                      history = [], page = None)
 
-    @expose ("molotov.cocktails.svn.templates.log")
+    @expose (".templates.log")
     def log (self) :
         last_rev = svn.fs.youngest_rev (self.fs)
         revisions = []

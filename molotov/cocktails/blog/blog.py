@@ -27,19 +27,19 @@ class Blog :
         "Init the Blog controller."
         pass
 
-    @expose ("molotov.cocktails.blog.templates.blog")
+    @expose (".templates.blog")
     def index (self) :
         "Display the list of blog billets."
         billets = Billet.select (orderBy = 'creation_date').reversed ()
         return dict (billets = list (billets), rst2html = rst2html)
 
-    @expose ("molotov.cocktails.blog.templates.billet")
+    @expose (".templates.billet")
     def billet (self, billet) :
         "Display a specific billet."
         b = Billet.get (billet)
         return dict (billet = b, rst2html=rst2html)
     
-    @expose ("molotov.cocktails.blog.templates.new_billet")
+    @expose (".templates.new_billet")
     def new_billet (self, title=None, data=None) :
         return dict (title=title, data=data, rst2html=rst2html)
 

@@ -15,6 +15,15 @@ def expose (template_name = None) :
     """
     def expose_decorator (func) :
         log.debug ('Exposing %s' % str (func))
+        
+        # Load a relative template
+        if template_name and template_name[0] == "." :
+            mod = func.__module__
+            real_tmpl = mod[:mod.rfind (".")] + template_name
+            print "Using template %s for %s" % (real_tmpl, template_name)
+        else :
+            real_tmpl = template_name
+        
         def exposed_func (*args, **kw) :
             # Get the dictionary
             d = func (*args, **kw)
@@ -43,8 +52,8 @@ def expose (template_name = None) :
                 for grp in usr.groups :
                     groups.append (grp.name)
             d['molotov_groups'] = groups
-
-            return (template_name, d)
+            
+            return (real_tmpl, d)
         if template_name :
             return cherrypy.expose (exposed_func)
         else :

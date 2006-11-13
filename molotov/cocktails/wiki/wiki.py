@@ -122,7 +122,7 @@ class Wiki :
         return publish_string (wiki_data, parser = self.parser,
                                writer_name = 'xml')
 
-    @molotov.expose ('molotov.cocktails.wiki.templates.page')
+    @molotov.expose ('.templates.page')
     def index (self, pagename = frontpage_name, format = "web") :
         
         # Search for an existing page
@@ -167,14 +167,14 @@ class Wiki :
         "Make a catch-all redirection to `index ()`."
         return self.index (pagename)
 
-    @molotov.expose ('molotov.cocktails.wiki.templates.pagelist')
+    @molotov.expose ('.templates.pagelist')
     def pagelist (self) :
         pages = [page.pagename for page \
                  in Page.select (orderBy = Page.q.pagename)]
         return dict (page = None, pages = pages,
                      history = cherrypy.session.get ('history', []))
     
-    @molotov.expose ('molotov.cocktails.wiki.templates.edit')
+    @molotov.expose ('.templates.edit')
     def edit (self, pagename, major = False) :
         "Edit a wiki page."
         data = None
@@ -222,7 +222,7 @@ class Wiki :
         flash ("Changes saved!")
         raise redirect (url ("/%s" % page.pagename))
 
-    @expose ("molotov.cocktails.wiki.templates.preview")
+    @expose (".templates.preview")
     def preview (self, pagename, data, title, major = False) :
         "Preview a change in a wiki page."
 
@@ -259,7 +259,7 @@ class Wiki :
         return self.preview (mod.page.pagename, mod.data,
                              'Retour à une version précédente')
 
-    @expose ("molotov.cocktails.wiki.templates.revision")
+    @expose (".templates.revision")
     def revision (self, modif, prev = None) :
 
         # Fetch the given Revision
@@ -293,7 +293,7 @@ class Wiki :
     def diff (self, rev1, rev2, submit = None) :
         return self.revision (modif = rev2, prev = rev1)
 
-    @expose ("molotov.cocktails.wiki.templates.modifs")
+    @expose (".templates.modifs")
     def modifs (self, pagename) :
         "Display the successive modifications of a wiki page."
 

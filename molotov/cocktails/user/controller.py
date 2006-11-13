@@ -39,7 +39,7 @@ class Controller :
         flash ("Logged out")
         raise cherrypy.HTTPRedirect (from_url)
     
-    @expose ("molotov.cocktails.user.templates.register")
+    @expose (".templates.register")
     def register (self, name = "", pass1 = "", pass2 = "", email = "") :
         "Display the registration formular."
         return dict (name = name, pass1 = pass1, pass2 = pass2, email = email)
@@ -85,7 +85,7 @@ class Controller :
             flash ("Registration successful")
         return self.register (name, pass1, pass2, email)
 
-    @expose ("molotov.cocktails.user.templates.admin")
+    @expose (".templates.admin")
     def admin (self) :
         return dict (groups = MolotovGroup.select (orderBy='name'),
                      users = MolotovUser.select (orderBy='name'))
