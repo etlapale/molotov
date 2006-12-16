@@ -23,34 +23,33 @@
 	  commentaires
 	</a>
       </p>
-    
       <div py:replace="XML (rst2html (billet.data))">Billet text goes here.</div>
-      
-      <h2><a name="comments">Commentaires</a></h2>
-      <div class="comment" py:for="c in billet.comments">
-	<div class="text" py:content="XML (rst2html (c.data))">Comment text</div>
-	<div class="info">
-	  Par
-	  <span class="user" py:if="c.user is None">Anonyme</span>
-	  <span class="user" py:if="not c.user is None"
-		py:content="c.user.display_name">User</span>
-	  le
-	  <span py:content="c.creation_date.strftime ('%A %d %B %Y à %Hh%M')"
-		class="datetime">Comment datetime</span>
-	</div>
-      </div>
-      
-      <h3>Ajouter un commentaire</h3>
-      <form method="post" action="do_new_comment">
-	<input type="hidden" name="billet" value="${billet.id}"/>
-	<label>Utilisateur</label>
-	<input type="text" disabled="disabled" py:if="not mltv_user is None" value="${mltv_user}"/>
-	<p py:if="mltv_user is None">Vous n'êtes pas identifié.</p>
-	<label>Texte</label>
-	<textarea name="data" cols="50" rows="15"/>
-	<input type="submit" value="poster"/>
-      </form>
     </div>
+      
+    <h2><a name="comments">Commentaires</a></h2>
+    <div class="comment" py:for="c in billet.comments">
+      <div class="text" py:content="XML (rst2html (c.data))">Comment text</div>
+      <div class="info">
+	Par
+	<span class="user" py:if="c.user is None">Anonyme</span>
+	<span class="user" py:if="not c.user is None"
+	      py:content="c.user.display_name">User</span>
+	le
+	<span py:content="c.creation_date.strftime ('%A %d %B %Y à %Hh%M')"
+	      class="datetime">Comment datetime</span>
+      </div>
+    </div>
+    
+    <h3>Ajouter un commentaire</h3>
+    <form method="post" action="do_new_comment">
+      <input type="hidden" name="billet" value="${billet.id}"/>
+      <label>Utilisateur</label>
+      <input type="text" disabled="disabled" py:if="not mltv_user is None" value="${mltv_user}"/>
+      <p py:if="mltv_user is None">Vous n'êtes pas identifié.</p>
+      <label>Texte</label>
+      <textarea name="data" cols="50" rows="15"/>
+      <input type="submit" value="poster"/>
+    </form>
     
     <p><a href="new_billet">Poster un billet</a></p>
   </body>

@@ -117,6 +117,9 @@ l'aide d'une ligne de la forme ::
 
   <link rel="stylesheet" type="text/css" href="/static/css/molotov.css"/>
 
+Vous pouvez aussi redéfinir vos propres templates en spécifiant leur module
+racine dans la clé de configuration ``molotov.templates``.
+
 .. _Buffet: http://www.buffet.org/
 .. _CherryPy: http://www.cherrypy.org/
 .. _Kid: http://www.kid-templating.org/

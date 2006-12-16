@@ -1,13 +1,25 @@
 # -*- coding: utf-8; -*-
 
-import logging, urllib
-import buffet, cherrypy, kid
+import logging, os, os.path, sys, urllib
+import cherrypy
+import kid
 import molotov
 
 log = logging.getLogger ("molotov")
 
 running_cocktails = []
 "Global running cocktails list."
+
+def find_template (template) :
+    tmpl_path = template.replace (".", os.sep)
+    ppath = os.getenv ('PYTHONPATH').split (':')
+    exts = ['.kid', '']
+    for d in ppath :
+        for e in exts :
+            path = os.path.join (d, tmpl_path + e)
+            if os.path.isfile (path) :
+                return path
+    return None
 
 def expose (template_name = None) :
     """
@@ -18,11 +30,22 @@ def expose (template_name = None) :
         
         # Load a relative template
         if template_name and template_name[0] == "." :
-            mod = func.__module__
-            real_tmpl = mod[:mod.rfind (".")] + template_name
-            print "Using template %s for %s" % (real_tmpl, template_name)
+            pers_tmpl = cherrypy.config.get ("molotov.templates")
+            if pers_tmpl :
+                mod = func.__module__
+                real_tmpl = pers_tmpl + "." \
+                            + mod[:mod.rfind (".")] + template_name
+            else :
+                mod = func.__module__
+                real_tmpl = mod[:mod.rfind (".")] + template_name
         else :
             real_tmpl = template_name
+
+        if real_tmpl :
+            tpath = find_template (real_tmpl)
+            if tpath is None :
+                print "Could find the template %s" % real_tmpl
+                sys.exit (1)
         
         def exposed_func (*args, **kw) :
             # Get the dictionary
@@ -52,8 +75,12 @@ def expose (template_name = None) :
                 for grp in usr.groups :
                     groups.append (grp.name)
             d['molotov_groups'] = groups
-            
-            return (real_tmpl, d)
+
+            # Templatize
+            tmpl_obj = kid.Template (name=real_tmpl, **d)
+            tmpl_obj.assume_encoding = 'utf-8'
+            ans = tmpl_obj.serialize ()
+            return ans
         if template_name :
             return cherrypy.expose (exposed_func)
         else :
@@ -74,13 +101,13 @@ def get_flash () :
     return ans
 
 def url (mltv_url_path, mltv_url_params = None, **kw) :
-
+    
     # Prefix path and params with mltv_url so **kw does not contains them
     
     if not isinstance (mltv_url_path, basestring) :
         mltv_url_path = "/".join (list (mltv_url_path))
     if mltv_url_path.startswith ("/") :
-        app_root = "/".join (cherrypy.request.path.split ("/")[:-1])
+        app_root = "/".join (cherrypy.request.path_info.split ("/")[:-1])
         if len (app_root) > 1 and app_root[-1] == "/" :
             app_root = app_root[:-1]
         mltv_url_path = app_root + mltv_url_path

@@ -1,18 +1,31 @@
 # -*- coding: utf-8; mode: python; -*-
 
 import codecs, locale, logging, optparse, os.path, sys
-from buffet import TemplateFilter, using_template
+#from buffet import TemplateFilter, using_template
 import cherrypy
-from cherrypy.config import dict_from_config_file
-from cherrypy.lib import autoreload
+from cherrypy._cpconfig import _Parser
+#from cherrypy.config import dict_from_config_file
+#from cherrypy.lib import autoreload
 from sqlobject import connectionForURI, sqlhub
 
 def update_config (conf, env) :
     d = {}
-    if conf not in autoreload.reloadFiles:
-        autoreload.reloadFiles.append (conf)
-        d = dict_from_config_file (conf, False, env)
-    cherrypy.config.update (updateMap = d)
+    if conf not in cherrypy.engine.reload_files:
+        cherrypy.engine.reload_files.append (conf)
+    parser = _Parser ()
+    parser.read (conf)
+    d = parser.as_dict (False, env)
+    cherrypy.config.update (d)
+    return d
+
+def fusion_conf (c1, c2) :
+    ans = c1
+    for (k,v) in c2.iteritems () :
+        if c1.has_key (k) and isinstance (v, dict) :
+            c1[k] = fusion_conf (c1[k], v)
+        else :
+            c1[k] = v
+    return ans
 
 def prepare () :
 
@@ -30,7 +43,7 @@ def prepare () :
     prefix_dir = os.path.dirname (sys.argv[0])
     generic_config = os.path.join (prefix_dir, "share", "generic.conf")
     env = {"molotov_prefix" : prefix_dir}
-    update_config (generic_config, env)
+    gconf = update_config (generic_config, env)
     logging.basicConfig (level = logging.DEBUG,
                          format = '%(asctime)s [%(name)s] %(levelname)s: %(message)s')
     log = logging.getLogger ('molotov')
@@ -40,7 +53,7 @@ def prepare () :
     if not os.path.isfile (conf_abs_path) :
         print >>sys.stderr, "Config file not found: `%s`" % args[0]
         sys.exit ()
-    update_config (conf_abs_path, env)
+    sconf = update_config (conf_abs_path, env)
     cherrypy.config.update ({"global" : {"molotov.cocktails.wiki.helpdir" :
                                          os.path.join (prefix_dir,
                                                        cherrypy.config.get ("molotov.cocktails.wiki.helpdir"))}})
@@ -79,7 +92,8 @@ def prepare () :
             log.error ("%s seems not being a valid cocktail" % cocktail)
 
     # Add templating support to the website
-    root._cp_filters = [TemplateFilter ('kid')]
-    
-    # Start the CherryPy server
-    cherrypy.root = root
+    #root._cp_filters = [TemplateFilter ('kid')]
+
+    # Mount the root cocktail
+    myconf = fusion_conf (gconf, sconf)
+    cherrypy.tree.mount (root, config=myconf)
