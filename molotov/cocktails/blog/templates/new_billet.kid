@@ -13,15 +13,14 @@
       <div py:replace="XML (rst2html (data))">Billet text goes here.</div>
     </div>
     <form action="do_new_billet" method="post">
+      <input type="hidden" name="billet" value="${billet}"/>
       <label>Titre</label>
       <input type="text" name="title" size="20" value="${title}"/>
       <label>Utilisateur</label>
       <input type="text" disabled="disabled" py:if="not mltv_user is None" value="${mltv_user}"/>
       <p py:if="mltv_user is None">Vous n'êtes pas identifié.</p>
       <label>Texte</label>
-      <textarea name="data" cols="50" rows="15">
-	<span py:if="data" py:replace="data"/>
-      </textarea>
+      <textarea name="data" cols="50" rows="15" py:content="data"/>
       <div py:if="data is None">
 	<input type="submit" name="submit" value="preview"/>
 	<input type="submit" name="submit" value="poster"/>

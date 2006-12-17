@@ -74,7 +74,7 @@ def expose (template_name = None) :
                 print usr.groups
                 for grp in usr.groups :
                     groups.append (grp.name)
-            d['molotov_groups'] = groups
+            d['mltv_groups'] = d['molotov_groups'] = groups
 
             # Templatize
             tmpl_obj = kid.Template (name=real_tmpl)

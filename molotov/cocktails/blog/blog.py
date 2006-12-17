@@ -40,17 +40,31 @@ class Blog :
         return dict (billet = b, rst2html=rst2html)
     
     @expose (".templates.new_billet")
-    def new_billet (self, title=None, data=None) :
-        return dict (title=title, data=data, rst2html=rst2html)
+    def new_billet (self, title=None, data=None, billet=None) :
+        return dict (title=title, data=data, rst2html=rst2html, billet=billet)
 
     @expose ()
-    def do_new_billet (self, title, data, submit) :
+    def do_new_billet (self, billet, title, data, submit) :
         if data and title:
             if submit == "preview" :
-                return self.new_billet (title, data)
+                return self.new_billet (title, data, billet=billet)
+            if billet :
+                return self.do_modify (billet, title, data)
             usr = cherrypy.session.get ("molotov.user", None)
             b = Billet (title = title, creation_date = datetime.now (),
                         user = usr, data = data)
+        raise redirect ("/")
+
+    @expose ()
+    def modify (self, billet) :
+        b = Billet.get (billet)
+        return self.new_billet (b.title, b.data, b.id)
+
+    @expose ()
+    def do_modify (self, billet, title, data) :
+        b = Billet.get (billet)
+        b.title = title
+        b.data = data
         raise redirect ("/")
 
     @expose ()

@@ -91,6 +91,13 @@ class Controller :
                      users = MolotovUser.select (orderBy='name'))
 
     @expose ()
+    def modify_user (self, user, display_name = None) :
+        u = MolotovUser.byName (user)
+        if display_name :
+            u.display_name = display_name
+        raise redirect ("/admin")
+
+    @expose ()
     def add_member (self, group, user) :
         grp = MolotovGroup.byName (group)
         usr = MolotovUser.byName (user)

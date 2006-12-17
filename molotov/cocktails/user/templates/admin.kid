@@ -12,7 +12,7 @@
     <h2>Groupes</h2>
     <p>
       Légende : <img alt="Remove" src="/static/images/cancel-16x16.png"/>
-	Enlève un utilisateur du groupe
+      Enlève un utilisateur du groupe
     </p>
     <div py:for="g in groups" class="mltv_group_info">
       <h3 py:content="g.name">GroupName</h3>
@@ -29,7 +29,7 @@
 	  <a href="${mltv.url ('/remove_member', group=g.name, user=u.name)}">
 	    <img alt="Remove" src="/static/images/cancel-16x16.png"/>
 	  </a>
-	  <span py:replace="u.name">MemberUser</span>
+	  <span py:replace="u.name">MemberName</span>
 	</li>
       </ul>
       <strong>Ajouter un membre :</strong>
@@ -49,6 +49,12 @@
     <h2>Utilisateurs</h2>
     <div py:for="u in users" class="mltv_user_info">
       <h3 py:content="u.name">GroupName</h3>
+      <strong>Display name</strong>
+      <form action="modify_user" method="post">
+	<input type="hidden" name="user" value="${u.name}"/>
+	<input type="text" name="display_name" value="${u.display_name}"/>
+	<input type="submit" value="Modifier"/>
+      </form>
       <strong>Groupes :</strong>
       <ul>
 	<li py:for="g in u.groups" py:content="g.name">Group</li>
