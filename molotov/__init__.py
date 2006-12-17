@@ -77,10 +77,11 @@ def expose (template_name = None) :
             d['molotov_groups'] = groups
 
             # Templatize
-            tmpl_obj = kid.Template (name=real_tmpl, **d)
-            tmpl_obj.assume_encoding = 'utf-8'
-            ans = tmpl_obj.serialize ()
-            return ans
+            tmpl_obj = kid.Template (name=real_tmpl)
+            for (k, v) in d.iteritems () :
+                setattr (tmpl_obj, k, v)
+            tmpl_obj.assume_encoding = cherrypy.config.get ('molotov.charset')
+            return tmpl_obj.serialize (output=cherrypy.config.get ('molotov.output'))
         if template_name :
             return cherrypy.expose (exposed_func)
         else :

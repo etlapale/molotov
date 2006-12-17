@@ -19,7 +19,8 @@
       <input type="text" disabled="disabled" py:if="not mltv_user is None" value="${mltv_user}"/>
       <p py:if="mltv_user is None">Vous n'êtes pas identifié.</p>
       <label>Texte</label>
-      <textarea name="data" cols="50" rows="15" py:content="data">
+      <textarea name="data" cols="50" rows="15">
+	<span py:if="data" py:replace="data"/>
       </textarea>
       <div py:if="data is None">
 	<input type="submit" name="submit" value="preview"/>
