@@ -12,7 +12,7 @@ To install Molotov, the following software packages must be installed:
 
  * Python, version >= 2.4.
  * CherryPy, version >= 2.2.
- * The SQLObject objet-relational mapper.
+ * The SQLObject objet-relational mapper (and a backend, eg sqlite).
  * Buffet as template abstraction layer.
  * The Kid template system.
  * Docutils, to parse the reStructuredText format.

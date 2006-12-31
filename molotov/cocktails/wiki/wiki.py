@@ -43,21 +43,24 @@ def previous_revision (revision) :
 
 class WikiNameInliner (states.Inliner) :
     "Inliner for WikiNames."
-    
-    h_upper_re = ur"[A-ZÀÂÄÅÉÈÊËÎÏÔÖÛÜ]"
-    h_any_re = ur"[A-Za-z0-9àåâäÀÂÄÅéèêëÉÈÊËîïìÎÏôöòÔÖüûùÛÜ]"
+
+    h_upper = u"A-ZÀÂÄÅÉÈÊËÎÏÔÖÛÜ"
+    h_upper_re = ur"[" + h_upper + "]"
+    h_lower = ur"a-zàåâäéèêëîïìôöòüûù"
+    h_lower_re = "[" + h_lower + "]"
+    h_any_re = ur"[0-9" + h_upper + h_lower + "]"
     wikiname_re = re.compile (ur"\b(" + h_upper_re \
-                             + h_any_re + "+" \
+                             + h_lower_re + "+" \
                              + h_upper_re + "+" \
                              + h_any_re + "*)",
                               re.LOCALE | re.UNICODE)
-    wikilink_re = re.compile (ur"\[[^\]]+\]", re.LOCALE | re.UNICODE)
+    #wikilink_re = re.compile (ur"\[[^\]]+\]", re.LOCALE | re.UNICODE)
     
     def __init__ (self, root) :
         states.Inliner.__init__ (self)
         self.root = root
         self.implicit_dispatch.append ((self.wikiname_re, self.wikiname))
-        self.implicit_dispatch.append ((self.wikilink_re, self.wikilink))
+        #self.implicit_dispatch.append ((self.wikilink_re, self.wikilink))
         
     def wikiname (self, match, lineno) :
         text = match.group (0)
@@ -105,23 +108,7 @@ class Wiki :
             h = h[:self.max_history]
         
         return h
-
-    def wiki2html (self, wiki_data) :
-        "Convert wiki data to HTML."
-        
-        root = str (url ("/"))
-        inliner = WikiNameInliner (root)
-        self.parser = Parser (inliner = inliner)
-        return publish_parts (wiki_data, parser = self.parser,
-                              writer_name = 'html')['html_body']
-
-    def wiki2docbook (self, wiki_data) :        
-        root = str (url ("/"))
-        inliner = WikiNameInliner (root)
-        self.parser = Parser (inliner = inliner)
-        return publish_string (wiki_data, parser = self.parser,
-                               writer_name = 'xml')
-
+    
     @molotov.expose ('.templates.page')
     def index (self, pagename = frontpage_name, format = "web") :
         
@@ -154,12 +141,12 @@ class Wiki :
             return revision.data
         elif format == "xml" :
             cherrypy.response.headers['Content-Type'] = 'text/xml'
-            return self.wiki2docbook (revision.data)
+            return molotov.format_rst (revision.data, format='xml')
         
         # Convert the WikiSyntax format to HTML
-        content = self.wiki2html (revision.data)
+        content = molotov.format_rst (revision.data, format='html')['html_body']
         
-        return dict (data = content, page = page, revision = revision,
+        return dict (data=content, page=page, revision=revision,
                      history = history)
 
     @expose ()
@@ -234,7 +221,7 @@ class Wiki :
             pass
         
         # Convert the WikiSyntax format to HTML
-        content = self.wiki2html (data)
+        content = molotov.format_rst (data, format='html') ['html_body']
         
         return dict (page = page, pagename = pagename, data = data,
                      html_data = content,
@@ -282,7 +269,7 @@ class Wiki :
             html_diff = diff_table (prev.data, rev.data)
 
         # Wiki presentation
-        data = self.wiki2html (rev.data)
+        data = molotov.format_rst (rev.data)['html_body']
         
         # Preview
         return dict (diff = html_diff,

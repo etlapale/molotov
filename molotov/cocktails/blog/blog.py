@@ -1,5 +1,5 @@
 # -*- coding: utf-8; mode: python; -*-
-# © 2006, Émilien TLAPALE
+# © 2006-2007, Émilien TLAPALE
 
 import logging
 from datetime import datetime
@@ -12,14 +12,6 @@ from molotov.cocktails.blog.model import Billet, BilletComment
 
 log = logging.getLogger ("molotov.cocktails.blog")
 
-def rst2html (data) :
-    # TODO: a global main rst2html
-    root = str (url ("/"))
-    #inliner = WikiNameInliner (root)
-    #parser = Parser (inliner = inliner)
-    return publish_parts (data, #parser = parser,
-                          writer_name = 'html')['html_body']
-
 class Blog :
     "Blog controller for Molotov."
 
@@ -31,17 +23,17 @@ class Blog :
     def index (self) :
         "Display the list of blog billets."
         billets = Billet.select (orderBy = 'creation_date').reversed ()
-        return dict (billets = list (billets), rst2html = rst2html)
+        return dict (billets=list (billets))
 
     @expose (".templates.billet")
     def billet (self, billet) :
         "Display a specific billet."
         b = Billet.get (billet)
-        return dict (billet = b, rst2html=rst2html)
+        return dict (billet=b)
     
     @expose (".templates.new_billet")
     def new_billet (self, title=None, data=None, billet=None) :
-        return dict (title=title, data=data, rst2html=rst2html, billet=billet)
+        return dict (title=title, data=data, billet=billet)
 
     @expose ()
     def do_new_billet (self, billet, title, data, submit) :

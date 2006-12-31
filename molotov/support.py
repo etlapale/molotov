@@ -84,15 +84,26 @@ def prepare () :
                 name = child.__class__.__name__
             if root == None :
                 root = child
-                molotov.running_cocktails.append ((name, "/"))
+                molotov.running_cocktails.append ((cocktail, name, "/"))
             else :
                 setattr (root, cocktail, child)
-                molotov.running_cocktails.append ((name, "/" + cocktail))
+                molotov.running_cocktails.append ((cocktail, name, "/" + cocktail))
         else :
             log.error ("%s seems not being a valid cocktail" % cocktail)
 
-    # Add templating support to the website
-    #root._cp_filters = [TemplateFilter ('kid')]
+    # Create a WikiName parser for reStructuredText
+    molotov.rst_parser = None
+    for (cocktail, name, prefix) in molotov.running_cocktails :
+        if cocktail == 'wiki' :
+            print 'Activating WikiName support for reStructuredText'
+            import molotov.cocktails.wiki.wiki, docutils.parsers.rst
+            if prefix == '/' :
+                wprefix = '/'
+            else :
+                wprefix = prefix + '/'
+            inliner = molotov.cocktails.wiki.wiki.WikiNameInliner (wprefix)
+            molotov.rst_parser = docutils.parsers.rst.Parser (inliner=inliner)
+            break
 
     # Mount the root cocktail
     myconf = fusion_conf (gconf, sconf)

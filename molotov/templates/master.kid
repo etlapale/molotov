@@ -17,21 +17,21 @@
       <div id="head">
 	<div id="headtitle" py:content="molotov_title">Website Title</div>
 	<ul id="cocktails" py:if="len (molotov_cocktails) > 1">
-	  <li py:for="(cocktail, url) in molotov_cocktails" py:if="url != '/user'">
-	    <a href="${url}" py:content="cocktail">CocktailName</a>
+	  <li py:for="(cocktail, name, url) in molotov_cocktails" py:if="cocktail != 'user'">
+	    <a href="${url}" py:content="name">CocktailName</a>
 	  </li>
 	</ul>
       </div>
       
-      <div id="userbox" py:if="('Controller', '/user') in molotov_cocktails">
+      <div id="userbox" py:if="mltv.has_user_cocktail ()">
 	<div py:if="molotov_user is None">
-	  <form action="/user/login" method="post">
+	  <form action="${mltv.cocktail_prefix ('user') + '/login'}" method="post">
 	    <input type="hidden" name="from_url" value="/"/>
 	    <input type="text" size="6" name="username"/>
 	    <input type="password" size="6" name="password"/>
 	    <input type="submit" value="Identification"/>
 	  </form>
-	  <a href="/user/register">Inscription</a>
+	  <a href="${mltv.cocktail_prefix ('user') + '/login'}">Inscription</a>
 	</div>
 	<div py:if="molotov_user != None">
 	  <p>
@@ -59,7 +59,7 @@
 	<!-- Footer -->
 	<hr class="spacer"/>
 	<div id="footer">
-	  Copyright &copy; 2002-2006 The Next-Touch Organization<br/>
+	  Copyright &copy; 2002-2007 The Next-Touch Organization<br/>
           Ce site utilise :
           <ul class="uselist">
             <li><a href="http://molotov.next-touch.com/">Molotov</a></li>

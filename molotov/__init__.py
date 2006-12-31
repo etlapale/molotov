@@ -3,6 +3,7 @@
 import logging, os, os.path, sys, urllib
 import cherrypy
 import kid
+from docutils.core import publish_parts
 import molotov
 
 log = logging.getLogger ("molotov")
@@ -138,3 +139,24 @@ def redirect(redirect_path, redirect_params=None, **kw):
     raise cherrypy.HTTPRedirect (url (mltv_url_path = redirect_path,
                                       mltv_url_params = redirect_params,
                                       **kw))
+
+def format_rst (data, format='html') :
+    defaults = {'file_insertion_enabled': 0,
+                'raw_enabled': 0,
+                '_disable_config': 1}
+    return publish_parts (data,
+                          parser=molotov.rst_parser,
+                          writer_name=format,
+                          settings_overrides=defaults)
+
+def has_user_cocktail () :
+    for (cocktail, name, prefix) in molotov.running_cocktails :
+        if cocktail == 'user' :
+            return True
+    return False
+
+def cocktail_prefix (cocktail) :
+    for (cock, name, prefix) in molotov.running_cocktails :
+        if cock == cocktail :
+            return prefix
+    return None

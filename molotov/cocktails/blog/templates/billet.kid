@@ -23,12 +23,12 @@
 	  commentaires
 	</a>
       </p>
-      <div py:replace="XML (rst2html (billet.data))">Billet text goes here.</div>
+      <div py:replace="XML (mltv.format_rst (billet.data)['html_body'])">Billet text goes here.</div>
     </div>
       
     <h2><a name="comments">Commentaires</a></h2>
     <div class="comment" py:for="c in billet.comments">
-      <div class="text" py:content="XML (rst2html (c.data))">Comment text</div>
+      <div class="text" py:content="XML (mltv.format_rst (c.data)['html_body''])">Comment text</div>
       <div class="info">
 	Par
 	<span class="user" py:if="c.user is None">Anonyme</span>

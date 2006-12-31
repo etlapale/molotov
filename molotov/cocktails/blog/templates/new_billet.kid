@@ -10,7 +10,7 @@
     <h1>New blog billet</h1>
     <div py:if="not data is None" class="blog_billet">
       <h1 py:content="title">Billet title</h1>
-      <div py:replace="XML (rst2html (data))">Billet text goes here.</div>
+      <div py:replace="XML (mltv.format_rst (data)['html_body'])">Billet text goes here.</div>
     </div>
     <form action="do_new_billet" method="post">
       <input type="hidden" name="billet" value="${billet}"/>
