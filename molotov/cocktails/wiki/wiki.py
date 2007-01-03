@@ -125,6 +125,12 @@ class Wiki :
             else :
                 raise redirect ('/edit', pagename = pagename)
 
+        # Check the page is not corrupted
+        if len (page.revisions) == 0 :
+            page.destroySelf ()
+            flash ("Corrupted page corrected")
+            raise redirect ("/edit", pagename=pagename)
+
         # Update the user page history
         history = self.update_history (pagename,
                                        cherrypy.session.get ('history', []))
@@ -202,12 +208,13 @@ class Wiki :
         # New page
         except SQLObjectNotFound :
             page = Page (pagename = pagename)
-            revision = Revision (rev = "0.0", date = datetime.now (),
-                                 user = identity.current.user,
+            revision = Revision (rev = "0.0",
+                                 date = datetime.now (),
+                                 user = cherrypy.session.get ('molotov.user', None),
                                  ip = "127.0.0.1",
                                  comment = title, data = data, page = page)
         flash ("Changes saved!")
-        raise redirect (url ("/%s" % page.pagename))
+        raise redirect ("/%s" % page.pagename)
 
     @expose (".templates.preview")
     def preview (self, pagename, data, title, major = False) :
