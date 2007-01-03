@@ -5,7 +5,7 @@ from datetime import datetime
 import cherrypy
 from sqlobject import SQLObjectNotFound
 import molotov
-from molotov import expose, flash, redirect, url
+from molotov import expose, flash, redirect, url, identity
 from molotov.model import MolotovUser, MolotovGroup
 
 class Controller :
@@ -19,6 +19,11 @@ class Controller :
     def __init__ (self, config) :
         "Init the user Controller"
         pass
+
+    @expose (".templates.forbidden")
+    def forbidden (self) :
+        "Called when trying to access unauthorized resource."
+        return dict ()
 
     @expose ()
     def login (self, username, password, from_url) :
@@ -85,12 +90,14 @@ class Controller :
             flash ("Registration successful")
         return self.register (name, pass1, pass2, email)
 
-    @expose (".templates.admin")
+    @expose ("molotov.cocktails.user.templates.admin")
+    @identity.require (identity.in_group ("molotov_admin"))
     def admin (self) :
         return dict (groups = MolotovGroup.select (orderBy='name'),
                      users = MolotovUser.select (orderBy='name'))
 
     @expose ()
+    @identity.require (identity.in_group ("molotov_admin"))
     def modify_user (self, user, display_name = None) :
         u = MolotovUser.byName (user)
         if display_name :
@@ -98,6 +105,7 @@ class Controller :
         raise redirect ("/admin")
 
     @expose ()
+    @identity.require (identity.in_group ("molotov_admin"))
     def add_member (self, group, user) :
         grp = MolotovGroup.byName (group)
         usr = MolotovUser.byName (user)
@@ -106,6 +114,7 @@ class Controller :
         raise redirect ("/admin")
 
     @expose ()
+    @identity.require (identity.in_group ("molotov_admin"))
     def remove_member (self, group, user) :
         grp = MolotovGroup.byName (group)
         usr = MolotovUser.byName (user)
@@ -114,12 +123,14 @@ class Controller :
         raise redirect ("/admin")
 
     @expose ()
+    @identity.require (identity.in_group ("molotov_admin"))
     def create_group (self, group) :
         grp = MolotovGroup (name=group)
         flash ("Group %s created" % group)
         raise redirect ("/admin")
 
     @expose ()
+    @identity.require (identity.in_group ("molotov_admin"))
     def delete_group (self, group) :
         grp = MolotovGroup.byName (group)
         if len (grp.users) :

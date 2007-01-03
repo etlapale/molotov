@@ -6,6 +6,7 @@ from datetime import datetime
 import cherrypy
 from docutils.core import publish_parts
 from docutils.parsers.rst import Parser
+from molotov import identity
 from molotov import expose, redirect, url
 from molotov.cocktails.blog.model import Billet, BilletComment
 #from molotov.cocktails.wiki.wiki import WikiNameInliner
@@ -31,7 +32,7 @@ class Blog :
         b = Billet.get (billet)
         return dict (billet=b)
     
-    @expose (".templates.new_billet")
+    @expose ("molotov.cocktails.blog.templates.new_billet")
     def new_billet (self, title=None, data=None, billet=None) :
         return dict (title=title, data=data, billet=billet)
 
