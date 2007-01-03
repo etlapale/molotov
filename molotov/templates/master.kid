@@ -31,7 +31,7 @@
 	    <input type="password" size="6" name="password"/>
 	    <input type="submit" value="Identification"/>
 	  </form>
-	  <a href="${mltv.cocktail_prefix ('user') + '/login'}">Inscription</a>
+	  <a href="${mltv.cocktail_prefix ('user') + '/register'}">Inscription</a>
 	</div>
 	<div py:if="molotov_user != None">
 	  <p>
