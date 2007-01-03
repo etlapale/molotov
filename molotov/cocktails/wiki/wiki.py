@@ -202,7 +202,7 @@ class Wiki :
         # New page
         except SQLObjectNotFound :
             page = Page (pagename = pagename)
-            revision = Revision (rev = "0.0", date = page.modif_date,
+            revision = Revision (rev = "0.0", date = datetime.now (),
                                  user = identity.current.user,
                                  ip = "127.0.0.1",
                                  comment = title, data = data, page = page)
