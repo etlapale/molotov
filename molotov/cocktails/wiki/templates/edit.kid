@@ -27,7 +27,7 @@
       <input type="submit" name="submit" value="Enregistrer"/>
     </form>
 
-    Retourner sur <a class="wikiname" href="${'/%s' % pagename}">
+    Retourner sur <a class="wikiname" href="${mltv.url ('/%s' % pagename)}">
       <span py:replace="pagename">Page Name</span></a>.
   </body>
 </html>

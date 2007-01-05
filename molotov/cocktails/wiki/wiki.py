@@ -147,7 +147,7 @@ class Wiki :
             return revision.data
         elif format == "xml" :
             cherrypy.response.headers['Content-Type'] = 'text/xml'
-            return molotov.format_rst (revision.data, format='xml')
+            return molotov.format_rst (revision.data, format='xml')['whole']
         
         # Convert the WikiSyntax format to HTML
         content = molotov.format_rst (revision.data, format='html')['html_body']
@@ -183,10 +183,9 @@ class Wiki :
                      history = cherrypy.session.get ('history', []))
 
     @expose ()
-    def save (self, pagename, data, title, major, submit) :
+    def save (self, pagename, data, title, major=False, submit="Previsualiser") :
         "Save changed made to a page."
 
-        print submit, submit.__class__, str (submit)
         if submit == u"Previsualiser" :
             return self.preview (pagename=pagename, data=data,
                                  title=title, major=major)
