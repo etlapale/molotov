@@ -401,6 +401,16 @@ textarea, input
   font-style: normal;
 }
 
+.delete
+{ 
+  background: url('/static/images/cancel-16x16.png');
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-style: normal;
+}
+
 .comments
 { 
   background: url('/static/images/comments-16x16.png');

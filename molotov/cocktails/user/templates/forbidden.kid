@@ -8,7 +8,7 @@
   <body>
     <h1>Unauthorized access</h1>
     <p>You are trying to access a resource without having the proper
-    authorizations. Please login using an accredited account to continue.</p>
+    authorizations. Please log-in using an accredited account to continue.</p>
     <p>Your tentative has been logged.</p>
   </body>
 </html>

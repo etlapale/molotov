@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<questions xmlns="http://molotov.next-touch.com/ns">
+  <question id="start">
+    <title>Validation de la charte</title>
+    <text>Avez-vous lu et acceptez-vous la charte d'hébergement
+      disponible sur le wiki ?</text>
+    <answers>
+      <answer next="legal">Oui</answer>
+      <answer reject="Vous devez approuver la charte.">Non</answer>
+    </answers>
+  </question>
+  <question id="legal">
+    <title>Légalité du site</title>
+    <text>Avez-vous conscience du fait que vous êtes tenu pour
+      responsable de l'intégralité du contenu de votre site web ?
+      Vous devrez en particulier veiller aux textes, commentaires
+      et autres que pourront entrer vos visiteurs.</text>
+    <answers>
+      <answer next="migration">OK</answer>
+      <answer reject="Merci de vous informer.">Ah bon ?</answer>
+    </answers>
+  </question>
+  <question id="migration">
+    <title>Migration</title>
+    <text>Si votre site existe déjà sur un serveur et que l'on
+    peut y accéder, entrez son adresse complète ici.</text>
+    <answers next="infos">
+      <field label="URL" var="existing-url"/>
+    </answers>
+  </question>
+  <question id="infos">
+    <title>Informations</title>
+    <text>Entrez ici les informations sur le site web que vous
+      souhaitez créer. L'URL est l'URL que vous souhaitez pour
+      votre site web. Elle doit obligatoirement être du type
+      http://monsite.domaine.nm ou monsite est libre mais
+      domaine.nm doit être choisit parmis [next-touch.com,
+      lyua.org, chataigne.org, tlapale.com].</text>
+    <answers next="services">
+      <field label="Titre" var="site-title"/>
+      <field label="URL" var="site-url"/>
+      <textarea label="Description" var="site-description"/>
+    </answers>
+  </question>
+  <question id="services">
+    <title>Services web</title>
+    <text>Vous allez à présent devoir indiquer vos besoins
+      en termes de service. Ne surestimez pas, vous pourrez
+      toujours tout modifier plus tard. De plus si les besoins
+      sont trop importants votre demande risque d'être rejetée
+      alors que s'ils sont très faible, votre demande aura
+      beaucoup plus de chances de passer.</text>
+    <answers next="end">
+      <checkbox label="PHP" var="need-php">J'utilise PHP</checkbox>
+      <checkbox label="MySQL" var="need-mysql">Une base MySQL</checkbox>
+      <checkbox label="PostgreSQL" var="need-pgsql">Une base PostgreSQL</checkbox>
+      <checkbox label="CGI ou .htaccess" var="need-htaccess">Activer le support des fichiers .htaccess (nécessaire pour les CGI)</checkbox>
+    </answers>
+  </question>
+  <question id="end">
+    <title>Validation</title>
+    <text>Vous allez à présent valider votre demande. N'hésitez pas à
+      rajouter un commentaire pour plus d'informations, des besoins
+      spécifiques, ou tout simplement pour appuyer votre demande.</text>
+    <answers final="true">
+      <textarea label="Commentaire" var="comment"/>
+    </answers>
+  </question>
+</questions>

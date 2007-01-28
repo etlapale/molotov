@@ -38,6 +38,10 @@
 	<span py:content="c.creation_date.strftime ('%A %d %B %Y à %Hh%M')"
 	      class="datetime">Comment datetime</span>
       </div>
+      <ul class="toolbar"
+	  py:if="(c.user and (c.user.name == mltv_user)) or 'blog_admin' in mltv_groups">
+	<li py:if="'blog_admin' in mltv_groups"><a class="delete" href="${mltv.url('delete_comment', comment=c.id)}">Supprimmer</a></li>
+      </ul>
     </div>
     
     <h3>Ajouter un commentaire</h3>

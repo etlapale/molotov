@@ -26,10 +26,13 @@
 		py:content="'%d commentaires' % len (b.comments)">#n</span>
 	</a>
       </p>
-      <div py:replace="XML (mltv.format_rst (b.data)['html_body'])">Billet text goes here.</div>
+      <div py:replace="XML (mltv.format_rst (b.data)['html_body'])">Billet text
+	goes here.</div>
       <ul class="toolbar"
-	  py:if="(b.user and (b.user.name == mltv_user)) or 'wiki_admin' in mltv_groups">
-	<li><a class="edit" href="${mltv.url ('modify', billet=b.id)}">Modifier le billet</a></li>
+	  py:if="(b.user and (b.user.name == mltv_user)) or 'blog_admin' in mltv_groups">
+	<li><a class="edit" href="${mltv.url('modify', billet=b.id)}">Modifier
+	    le billet</a></li>
+	<li py:if="'blog_admin' in mltv_groups"><a class="delete" href="${mltv.url('delete', billet=b.id)}">Supprimmer</a></li>
       </ul>
     </div>
     <p><a href="new_billet">Poster un billet</a></p>

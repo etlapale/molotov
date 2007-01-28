@@ -7,7 +7,7 @@ import cherrypy
 from docutils.core import publish_parts
 from docutils.parsers.rst import Parser
 from molotov import identity
-from molotov import expose, redirect, url
+from molotov import expose, flash, redirect, url
 from molotov.cocktails.blog.model import Billet, BilletComment
 #from molotov.cocktails.wiki.wiki import WikiNameInliner
 
@@ -54,13 +54,35 @@ class Blog :
         return self.new_billet (b.title, b.data, b.id)
 
     @expose ()
-    def do_modify (self, billet, title, data) :
-        b = Billet.get (billet)
+    @identity.require(identity.valid_user)
+    def do_modify (self, billet, title, data):
+        b = Billet.get(billet)
+        usr = cherrypy.session.get("molotov.user")
+        if not identity.in_group("blog_admin")(usr) \
+           and b.user != usr:
+            raise cherrypy.HTTPRedirect("/user/forbidden")
         b.title = title
         b.data = data
-        raise redirect ("/")
+        flash("Billet %d modified" % billet)
+        raise redirect("/")
 
-    @expose ()
+    @expose()
+    @identity.require(identity.in_group("blog_admin"))
+    def delete(self, billet):
+        b = Billet.get(billet)
+        b.destroySelf()
+        flash("Billet deleted")
+        raise redirect("/")
+
+    @expose()
+    @identity.require(identity.in_group("blog_admin"))
+    def delete_comment(self, comment):
+        c = BilletComment.get(comment)
+        c.destroySelf()
+        flash("Comment deleted")
+        raise redirect("/")
+
+    @expose()
     def do_new_comment (self, billet, data) :
         if billet and data :
             usr = cherrypy.session.get ("molotov.user", None)

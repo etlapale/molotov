@@ -22,8 +22,14 @@ class MolotovGroup (SQLObject) :
     users = RelatedJoin ('MolotovUser')
     "Users affiliated to the group."
 
+class Captcha(SQLObject):
+    captcha_id = UnicodeCol(alternateID=True)
+    text = UnicodeCol()
+    src = UnicodeCol()
+    creation = DateTimeCol()
+
 # Create the tables if needed
-for cls in [MolotovUser, MolotovGroup] :
+for cls in [MolotovUser, MolotovGroup, Captcha] :
     cls.createTable (ifNotExists = True)
 
 # Create the `molotov_admin` group if needed
@@ -31,4 +37,3 @@ try :
     adm_grp = MolotovGroup.byName ('molotov_admin')
 except SQLObjectNotFound :
     adm_grp = MolotovGroup (name = 'molotov_admin')
-

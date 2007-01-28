@@ -1,6 +1,7 @@
 # -*- coding: utf-8; mode: python; -*-
 
 import codecs, locale, logging, optparse, os.path, sys
+import os
 #from buffet import TemplateFilter, using_template
 import cherrypy
 from cherrypy._cpconfig import _Parser
@@ -42,7 +43,11 @@ def prepare () :
     # Load the default config
     prefix_dir = os.path.dirname (sys.argv[0])
     generic_config = os.path.join (prefix_dir, "share", "generic.conf")
-    env = {"molotov_prefix" : prefix_dir}
+    env = {"molotov_prefix" : prefix_dir,
+           "molotov_cwd" : os.getcwd()}
+    
+    cherrypy.config.update ({"global" : {"molotov.prefix" : prefix_dir,
+                                         "molotov.cwd" : os.getcwd()}})
     gconf = update_config (generic_config, env)
     logging.basicConfig (level = logging.DEBUG,
                          format = '%(asctime)s [%(name)s] %(levelname)s: %(message)s')

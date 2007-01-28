@@ -19,6 +19,9 @@ def require (identity_constraint) :
         return require_call
     return require_decorator
 
+def valid_user(user):
+    return user is not None
+
 def in_group (group_name) :
     def func (user) :
         for group in user.groups :

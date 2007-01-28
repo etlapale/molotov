@@ -6,7 +6,7 @@ import kid
 from docutils.core import publish_parts
 import molotov
 
-log = logging.getLogger ("molotov")
+log = logging.getLogger("molotov")
 
 running_cocktails = []
 "Global running cocktails list."
@@ -64,7 +64,7 @@ def expose (template_name = None) :
             d['molotov_cocktails'] = molotov.running_cocktails
 
             # User
-            usr = cherrypy.session.get ('molotov.user', None)
+            usr = cherrypy.session.get('molotov.user', None)
             if usr :
                 username = usr.name
             else :
