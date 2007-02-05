@@ -50,6 +50,12 @@
       <label>Utilisateur</label>
       <input type="text" disabled="disabled" py:if="not mltv_user is None" value="${mltv_user}"/>
       <p py:if="mltv_user is None">Vous n'êtes pas identifié.</p>
+      <label>Captcha : recopiez le texte de l'image</label>
+      <br/>
+      <img alt="Captcha" src="${captcha.src}"/>
+      <br/>
+      <input type="hidden" name="captcha_id" value="${captcha.captcha_id}"/>
+      <input type="text" name="captcha_answer" size="10"/>
       <label>Texte</label>
       <textarea name="data" cols="50" rows="15"/>
       <input type="submit" value="poster"/>

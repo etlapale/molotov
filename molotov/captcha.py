@@ -9,6 +9,8 @@ import time
 
 from PIL import Image, ImageDraw, ImageFont
 
+from sqlobject import SQLObjectNotFound
+
 from molotov.model import Captcha
 
 
@@ -96,3 +98,14 @@ def create_captcha():
     c = Captcha(captcha_id=captcha_id, text=text, src=src,
                 creation=datetime.now())
     return c
+
+def check_captcha(captcha_id, captcha_answer):
+    try:
+        c = Captcha.byCaptcha_id(captcha_id)
+    except SQLObjectNotFound:
+        print "Captcha not found!", captcha_id
+        return False
+    print c.text, "<?>", captcha_answer
+    ans = c.text == captcha_answer
+    c.destroySelf()
+    return ans

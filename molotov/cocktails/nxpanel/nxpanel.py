@@ -15,8 +15,8 @@ import molotov
 from molotov import expose, flash, identity
 import molotov.captcha
 import molotov.config
-from molotov.captcha import create_captcha
-from molotov.model import Captcha, MolotovGroup
+from molotov.captcha import create_captcha, check_captcha
+from molotov.model import MolotovGroup
 from molotov.cocktails.nxpanel.model import EmailAccount, EmailAlias
 from molotov.util import valid_email
 from molotov.xml import xml_node_get_text
@@ -70,15 +70,10 @@ class NXPanel:
         if not name or not address or not email or not chart:
             flash("Incomplete form")
             return self.first_time(name, address, email)
-        c = Captcha.byCaptcha_id(captcha_id)
-        if c is None:
-            flash("Invalid captcha!")
-            return self.first_time(name, address, email)
-        if c.text != captcha_answer:
-            print c.text, "<>", captcha_answer
+        if not check_captcha(captcha_id, captcha_answer):
             flash("Bad captcha answer, try again!")
             return self.first_time(name, address, email)
-
+        
         # Mark as data provided
         user = cherrypy.session.get("molotov.user")
         try:

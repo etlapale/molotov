@@ -8,8 +8,7 @@ from docutils.core import publish_parts
 from docutils.parsers.rst import Parser
 from molotov import identity
 from molotov import expose, flash, redirect, url
-from molotov.captcha import create_captcha
-from molotov.model import Captcha
+from molotov.captcha import create_captcha, check_captcha
 from molotov.cocktails.blog.model import Billet, BilletComment
 
 log = logging.getLogger ("molotov.cocktails.blog")
@@ -31,14 +30,20 @@ class Blog :
     def billet (self, billet) :
         "Display a specific billet."
         b = Billet.get (billet)
-        return dict (billet=b)
+        captcha = create_captcha()
+        return dict (billet=b, captcha=captcha)
     
     @expose ("molotov.cocktails.blog.templates.new_billet")
     def new_billet (self, title=None, data=None, billet=None) :
-        return dict (title=title, data=data, billet=billet)
+        return dict (title=title, data=data, billet=billet,
+                     captcha=create_captcha())
 
     @expose ()
-    def do_new_billet (self, billet, title, data, submit) :
+    def do_new_billet (self, billet, title, data,
+                       captcha_id, captcha_answer, submit) :
+        if not check_captcha(captcha_id, captcha_answer):
+            flash("Bad captcha answer, try again!")
+            return self.new_billet(title, data, billet)
         if data and title:
             if submit == "preview" :
                 return self.new_billet (title, data, billet=billet)
@@ -85,11 +90,13 @@ class Blog :
         raise redirect("/billet", billet=billet_id)
 
     @expose()
-    def do_new_comment (self, billet, data) :
-        if billet and data :
+    def do_new_comment(self, billet, data, captcha_id, captcha_answer) :
+        if not check_captcha(captcha_id, captcha_answer):
+            flash("Bad captcha answer, try again!")
+        elif billet and data :
             usr = cherrypy.session.get ("molotov.user", None)
             print billet
             b = Billet.get (billet)
             c = BilletComment (data = data, creation_date = datetime.now (),
                                user = usr, billet = b)
-        raise redirect ("/billet", billet=billet)
+        raise redirect("/billet", billet=billet)
