@@ -39,7 +39,7 @@
     <answers next="services">
       <field label="Titre" var="site-title"/>
       <field label="URL" var="site-url"/>
-      <textarea label="Description" var="site-description"/>
+      <textarea label="Description (obligatoire)" var="site-description"/>
     </answers>
   </question>
   <question id="services">
@@ -59,11 +59,12 @@
   </question>
   <question id="end">
     <title>Validation</title>
-    <text>Vous allez à présent valider votre demande. N'hésitez pas à
-      rajouter un commentaire pour plus d'informations, des besoins
-      spécifiques, ou tout simplement pour appuyer votre demande.</text>
+    <text>Vous allez à présent valider votre demande. Votre demande
+    sera très certainement rejeté si vous n'avez pas entré suffisamment
+    de texte (les objectifs, une description, ...). Vous pouvez aussi
+    préciser vos besoins spécifiques ici.</text>
     <answers final="true">
-      <textarea label="Commentaire" var="comment"/>
+      <textarea label="Commentaire (obligatoire)" var="comment"/>
     </answers>
   </question>
 </questions>

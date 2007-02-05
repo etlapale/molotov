@@ -8,8 +8,9 @@ from docutils.core import publish_parts
 from docutils.parsers.rst import Parser
 from molotov import identity
 from molotov import expose, flash, redirect, url
+from molotov.captcha import create_captcha
+from molotov.model import Captcha
 from molotov.cocktails.blog.model import Billet, BilletComment
-#from molotov.cocktails.wiki.wiki import WikiNameInliner
 
 log = logging.getLogger ("molotov.cocktails.blog")
 
@@ -78,9 +79,10 @@ class Blog :
     @identity.require(identity.in_group("blog_admin"))
     def delete_comment(self, comment):
         c = BilletComment.get(comment)
+        billet_id = c.billet.id
         c.destroySelf()
         flash("Comment deleted")
-        raise redirect("/")
+        raise redirect("/billet", billet=billet_id)
 
     @expose()
     def do_new_comment (self, billet, data) :
