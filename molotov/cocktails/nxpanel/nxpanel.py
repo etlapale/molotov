@@ -222,6 +222,7 @@ E-mail address created: %s\r""" % (self.log_email, self.log_email, address1, add
                    "Subject: [Next-Touch] Hosting request",
                    "To: %s" % self.log_email,
                    ""]
+	    msg.append("MolotovUser: %s" % cherrypy.session.get("molotov.user").name)
             for key, value in variables.iteritems():
                 msg.append("%s: %s" % (key, value))
             msg = ("\r\n".join(msg)).encode('latin-1')
