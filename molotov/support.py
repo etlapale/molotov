@@ -29,10 +29,8 @@ def fusion_conf (c1, c2) :
     return ans
 
 def prepare () :
-
     # Load the default locale
     locale.setlocale (locale.LC_ALL, '')
-
     # Parse the arguments
     parser = optparse.OptionParser ()
     (options, args) = parser.parse_args ()
@@ -42,6 +40,10 @@ def prepare () :
 
     # Load the default config
     prefix_dir = os.path.dirname (sys.argv[0])
+    if 'PYTHONPATH' in os.environ:
+        os.environ['PYTHONPATH'] += ':' + prefix_dir
+    else:
+	os.environ['PYTHONPATH'] = prefix_dir
     generic_config = os.path.join (prefix_dir, "share", "generic.conf")
     env = {"molotov_prefix" : prefix_dir,
            "molotov_cwd" : os.getcwd()}
@@ -111,5 +113,5 @@ def prepare () :
             break
 
     # Mount the root cocktail
-    myconf = fusion_conf (gconf, sconf)
-    cherrypy.tree.mount (root, config=myconf)
+    myconf = fusion_conf(gconf, sconf)
+    cherrypy.tree.mount(root, config=myconf)

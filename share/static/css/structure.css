@@ -688,3 +688,20 @@ a img
 { 
   border-width: 0;
 }
+
+div.warning
+{
+  margin: 1em;
+  padding: 1em;
+  font-weight: bold;
+}
+
+div.warning p.admonition-title
+{
+  font-size: larger;
+  background: url('/static/images/warning-32x32.png');
+  background-repeat: no-repeat;
+  padding-left: 40px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}

@@ -177,7 +177,7 @@ class NXPanel:
         db = connect(user=self.pgdb_user, password=self.pgdb_pass,
                      host=self.pgdb_host, database=self.pgdb_db)
         curs = db.cursor()
-        mdir = "/home/vmail/domains/%s/%s" % (m.group(1), m.group(2))
+        mdir = "/home/vmail/domains/%s/%s" % (m.group(2), m.group(1))
         curs.execute("INSERT INTO courier " \
                      + "(id, clear, name, uid, gid, home, maildir) " \
                      + "VALUES (%s, %s, '', 1003, 410, '/home/vmail', %s)",

@@ -69,7 +69,7 @@ class Blog :
             raise cherrypy.HTTPRedirect("/user/forbidden")
         b.title = title
         b.data = data
-        flash("Billet %d modified" % billet)
+        flash("Billet %d modified" % int(billet))
         raise redirect("/")
 
     @expose()

@@ -300,3 +300,8 @@ table
   border-color: #d6e2ff;
   background-color: #f6f6ff;
 }
+
+div.warning p.admonition-title
+{
+  color: #ff0080;
+}
